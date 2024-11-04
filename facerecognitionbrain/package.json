@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-parallax-tilt": "^1.7.251",
     "tachyons": "^4.12.0"
   },
   "devDependencies": {

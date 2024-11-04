@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Navigation } from "./components/Navigation";
+import { Logo } from "./components/Logo/Logo";
 
 export class App extends Component {
 
@@ -9,9 +10,9 @@ export class App extends Component {
 
       <div className="App">
         <Navigation />
-        {/* <Logo />
-        <ImageLinkForm />
-        <FaceRecognition /> */}
+        <Logo />
+        {/* <ImageLinkForm /> */}
+        {/* <FaceRecognition /> */}
       </div>
     )
   }
