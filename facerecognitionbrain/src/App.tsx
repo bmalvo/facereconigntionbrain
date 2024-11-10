@@ -3,6 +3,8 @@ import { Navigation } from "./components/Navigation";
 import { Logo } from "./components/Logo/Logo";
 import { ImageLinkForm } from "./components/ImageLinkForm/ImageLinkForm";
 import { Rank } from "./components/Rank/Rank";
+import ParticlesBg from 'particles-bg';
+
 
 export class App extends Component {
 
@@ -11,6 +13,7 @@ export class App extends Component {
     return (
 
       <div className="App">
+        <ParticlesBg type="tadpole" bg={true}/>
         <Navigation />
         <Logo />
         <Rank />

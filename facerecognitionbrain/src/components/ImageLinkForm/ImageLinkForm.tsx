@@ -1,16 +1,15 @@
-import ParticlesBg from 'particles-bg';
-
 export const ImageLinkForm = () => {
 
   return <>
     <div className="ms-2" style={{
       textAlign: 'center',
     }}>
-      <p className="f3">
+      <p className="f3 white">
         {'This Magic Brain will detect faces in your pictures. Give it a try.👽'}
       </p>
-      <div className="pa4 br3 shadow-5 w-50" style={{
-        margin: '0 auto'
+      <div className="pa4 br3 shadow-5 w-50 LinkFormBG" style={{
+        margin: '0 auto',
+        // background: 'black'
       }}>
         <input className="f4 pa2 w-70 center" type="text" />
         <button
@@ -19,7 +18,6 @@ export const ImageLinkForm = () => {
             color: 'black'
           }}>
           Detect
-        <ParticlesBg type="random" bg={true}/>
         </button>
       </div>
     </div>
