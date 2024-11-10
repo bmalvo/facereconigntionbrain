@@ -1,4 +1,11 @@
-export const ImageLinkForm = () => {
+import { ChangeEvent } from "react";
+
+interface ImageLinkFormProps {
+    onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    onButtonSubmit: () => void; // Assuming onSubmit doesn't take any parameters
+}
+
+export const ImageLinkForm: React.FC<ImageLinkFormProps> = ({ onInputChange, onButtonSubmit }) => {
 
   return <>
     <div className="ms-2" style={{
@@ -11,13 +18,15 @@ export const ImageLinkForm = () => {
         margin: '0 auto',
         // background: 'black'
       }}>
-        <input className="f4 pa2 w-70 center" type="text" />
+        <input className="f4 pa2 w-70 center" type="text" onChange={onInputChange} />
         <button
           className="w-20 grow f4 link ph3 pv2 dib white bg-light-purple"
+          onClick={onButtonSubmit}
           style={{
-            color: 'black'
-          }}>
-          Detect
+            fontSize: '1em'
+          }}
+          >
+          <span>Detect</span>
         </button>
       </div>
     </div>
