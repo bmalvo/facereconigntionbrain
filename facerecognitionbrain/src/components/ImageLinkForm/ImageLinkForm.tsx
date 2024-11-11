@@ -18,7 +18,7 @@ export const ImageLinkForm: React.FC<ImageLinkFormProps> = ({ onInputChange, onB
         margin: '0 auto',
         // background: 'black'
       }}>
-        <input className="f4 pa2 w-70 center" type="text" onChange={onInputChange} />
+        <input id='inputimage' className="f4 pa2 w-70 center" type="text" onChange={onInputChange} />
         <button
           className="w-20 grow f4 link ph3 pv2 dib white bg-light-purple"
           onClick={onButtonSubmit}
