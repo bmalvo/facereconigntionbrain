@@ -1,10 +1,11 @@
 import { ChangeEvent, Component } from "react";
-import { Navigation } from "./components/Navigation";
+import { Navigation } from "./Navigation/Navigation";
 import { Logo } from "./components/Logo/Logo";
 import { ImageLinkForm } from "./components/ImageLinkForm/ImageLinkForm";
 import { Rank } from "./components/Rank/Rank";
 import ParticlesBg from 'particles-bg';
 import { FaceRecognition } from "./FaceRecognition/FaceRecognition";
+import { Singin } from "./Singin/Singin";
 
 // import Clarifai from 'clarifai';
 
@@ -18,7 +19,10 @@ interface AppState {
 
   input: string;
   imgURL: string;
+  route: string | null;
 }
+
+
 
 export class App extends Component<object, AppState> {
 
@@ -28,7 +32,8 @@ export class App extends Component<object, AppState> {
     this.state = {
       
       input: '',
-      imgURL: ''
+      imgURL: '',
+      route: 'singin',
     }
   }
 
@@ -82,20 +87,30 @@ export class App extends Component<object, AppState> {
   
   }
 
+  onRouteChange = (route: string) => {
+
+    this.setState({ route: route });
+  }
+
   render() {
 
     return (
 
       <div className="App">
         <ParticlesBg type="tadpole" bg={true}/>
-        <Navigation />
-        <Logo />
-        <Rank />
-        <ImageLinkForm
-          onInputChange={this.onInputChange}
-          onButtonSubmit={this.onButtonSubmit} />
-        <FaceRecognition imgURL={ this.state.imgURL} />
-      </div>
+        <Navigation onRouteChange={this.onRouteChange}/>
+        {this.state.route === 'singin' ?
+          <Singin onRouteChange={ this.onRouteChange} />
+          :
+          <div>  
+            <Logo />
+            <Rank />
+            <ImageLinkForm
+              onInputChange={this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit} />
+            <FaceRecognition imgURL={this.state.imgURL} />
+          </div>}
+        </div>
     )
   }
 }
