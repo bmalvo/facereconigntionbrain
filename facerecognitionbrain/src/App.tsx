@@ -21,6 +21,7 @@ interface AppState {
   input: string;
   imgURL: string;
   route: string | null;
+  isSignedIn: boolean;
 }
 
 
@@ -34,7 +35,8 @@ export class App extends Component<object, AppState> {
       
       input: '',
       imgURL: '',
-      route: 'singin',
+      route: 'signin',
+      isSignedIn: false
     }
   }
 
@@ -90,28 +92,36 @@ export class App extends Component<object, AppState> {
 
   onRouteChange = (route: string) => {
 
+    if (route === 'signout') {
+      
+      this.setState({ isSignedIn: false })
+    } else if (route === 'home') {
+
+      this.setState({isSignedIn: true})
+    }
     this.setState({ route: route });
   }
 
   render() {
 
-    return (
+    const {  isSignedIn, route, imgURL} = this.state;
 
+    return (
+    
       <div className="App">
         <ParticlesBg type="tadpole" bg={true}/>
-        <Navigation onRouteChange={this.onRouteChange}/>
-        {this.state.route === 'home' ?
+        <Navigation  onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
+        {route === 'home' ?
           <div>  
             <Logo />
             <Rank />
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit} />
-            <FaceRecognition imgURL={this.state.imgURL} />
+            <FaceRecognition imgURL={imgURL} />
           </div>
           : (
-            this.state.route === 'singin'
-              ?
+            route === 'signin' ?
               <Singin onRouteChange={this.onRouteChange} /> 
               :
               <Register onRouteChange={this.onRouteChange}/>
