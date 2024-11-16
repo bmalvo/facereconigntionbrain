@@ -6,6 +6,7 @@ import { Rank } from "./components/Rank/Rank";
 import ParticlesBg from 'particles-bg';
 import { FaceRecognition } from "./FaceRecognition/FaceRecognition";
 import { Singin } from "./Singin/Singin";
+import { Register } from "./Register/Register";
 
 // import Clarifai from 'clarifai';
 
@@ -99,9 +100,7 @@ export class App extends Component<object, AppState> {
       <div className="App">
         <ParticlesBg type="tadpole" bg={true}/>
         <Navigation onRouteChange={this.onRouteChange}/>
-        {this.state.route === 'singin' ?
-          <Singin onRouteChange={ this.onRouteChange} />
-          :
+        {this.state.route === 'home' ?
           <div>  
             <Logo />
             <Rank />
@@ -109,7 +108,15 @@ export class App extends Component<object, AppState> {
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit} />
             <FaceRecognition imgURL={this.state.imgURL} />
-          </div>}
+          </div>
+          : (
+            this.state.route === 'singin'
+              ?
+              <Singin onRouteChange={this.onRouteChange} /> 
+              :
+              <Register onRouteChange={this.onRouteChange}/>
+          )
+        }
         </div>
     )
   }
