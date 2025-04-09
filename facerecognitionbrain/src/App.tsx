@@ -8,12 +8,12 @@ import { FaceRecognition } from "./FaceRecognition/FaceRecognition";
 import { Singin } from "./Singin/Singin";
 import { Register } from "./Register/Register";
 
-import Clarifai from 'clarifai';
+// import Clarifai from 'clarifai';
 
 // doesn't work. need improvement
-const app = new Clarifai.App({
- apiKey: 'd61a3acbc1cf4474910cb8689f72db1d'
-});
+// const app = new Clarifai.App({
+//  apiKey: 'd61a3acbc1cf4474910cb8689f72db1d'
+// });
 
 
 interface AppState {
@@ -40,30 +40,30 @@ export class App extends Component<object, AppState> {
     }
   }
 
-  componentDidMount(): void {
+  componentDidMount() {
     
-    fetch('http://localhost:3000')
+    fetch('http://localhost:3000/')
       .then(res => res.json())
       .then(console.log)
   }
 
   // clarifai does not work
-  calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.getElementById('inputimage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
-    }
-  }
+  // calculateFaceLocation = (data) => {
+  //   const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+  //   const image = document.getElementById('inputimage');
+  //   const width = Number(image.width);
+  //   const height = Number(image.height);
+  //   return {
+  //     leftCol: clarifaiFace.left_col * width,
+  //     topRow: clarifaiFace.top_row * height,
+  //     rightCol: width - (clarifaiFace.right_col * width),
+  //     bottomRow: height - (clarifaiFace.bottom_row * height)
+  //   }
+  // }
 
-  displayFaceBox = (box) => {
-    this.setState({box: box});
-  }
+  // displayFaceBox = (box) => {
+  //   this.setState({box: box});
+  // }
 
 
   onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -73,27 +73,27 @@ export class App extends Component<object, AppState> {
   onButtonSubmit = () => {
 
     // clarifai doesn't work properly
-    console.log('button submitted')
-    app.models.predict('face-detection', this.state.input)
-      .then(response => {
-        console.log('hi', response)
-        if (response) {
-          fetch('http://localhost:5173/image', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              id: this.state.user.id
-            })
-          })
-            .then(response => response.json())
-            .then(count => {
-              this.setState(Object.assign(this.state.user, { entries: count}))
-            })
+    // console.log('button submitted')
+    // app.models.predict('face-detection', this.state.input)
+    //   .then(response => {
+    //     console.log('hi', response)
+    //     if (response) {
+    //       fetch('http://localhost:5173/image', {
+    //         method: 'put',
+    //         headers: {'Content-Type': 'application/json'},
+    //         body: JSON.stringify({
+    //           id: this.state.user.id
+    //         })
+    //       })
+    //         .then(response => response.json())
+    //         .then(count => {
+    //           this.setState(Object.assign(this.state.user, { entries: count}))
+    //         })
 
-        }
-        this.displayFaceBox(this.calculateFaceLocation(response))
-      })
-      .catch(err => console.log(err));
+    //     }
+    //     this.displayFaceBox(this.calculateFaceLocation(response))
+    //   })
+    //   .catch(err => console.log(err));
   
   }
 
