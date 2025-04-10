@@ -39,13 +39,13 @@ export class App extends Component<object, AppState> {
       isSignedIn: false
     }
   }
-
-  componentDidMount() {
+// no need for delete
+  // componentDidMount() {
     
-    fetch('http://localhost:3000/')
-      .then(res => res.json())
-      .then(console.log)
-  }
+  //   fetch('http://localhost:3000/')
+  //     .then(res => res.json())
+  //     .then(console.log)
+  // }
 
   // clarifai does not work
   // calculateFaceLocation = (data) => {
