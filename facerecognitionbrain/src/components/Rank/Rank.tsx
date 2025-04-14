@@ -1,16 +1,21 @@
-export const Rank = () => {
+type Rank = {
+  name: string;
+  entries: number;
+}
+
+export const Rank = ({ name, entries }: Rank) => {
 
   return <>
     <div>
       <div className="white f3" style={{
         textAlign: 'center'
       }}>
-        {'Patrick Your current rank is...'}
+        {`${name} your current rank is...`}
       </div>
       <div className="white f1" style={{
         textAlign: 'center'
       }}>
-        {'#5'}
+        {entries}
       </div>
     </div>
   </>

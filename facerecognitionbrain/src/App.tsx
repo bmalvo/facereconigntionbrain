@@ -6,7 +6,7 @@ import { Rank } from "./components/Rank/Rank";
 import ParticlesBg from 'particles-bg';
 import { FaceRecognition } from "./FaceRecognition/FaceRecognition";
 import { Singin } from "./Singin/Singin";
-import { Register } from "./Register/Register";
+import {Register}  from "./Register/Register";
 
 // import Clarifai from 'clarifai';
 
@@ -22,8 +22,24 @@ interface AppState {
   imgURL: string;
   route: string | null;
   isSignedIn: boolean;
+  box: object;
+  user: {
+        id: string,
+        name: string,
+        email: string,
+        entries: number,
+        joined: Date
+      }
 }
 
+type user = {
+id: string,
+        name: string,
+        email: string,
+        entries: number,
+        joined: Date
+
+}
 
 
 export class App extends Component<object, AppState> {
@@ -35,9 +51,27 @@ export class App extends Component<object, AppState> {
       
       input: '',
       imgURL: '',
+      box: {},
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: new Date()
+      }
     }
+  }
+
+  loadUser = (data: user) => {
+    this.setState({user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+    }})
   }
 // no need for delete
   // componentDidMount() {
@@ -71,6 +105,8 @@ export class App extends Component<object, AppState> {
   }
 
   onButtonSubmit = () => {
+
+    this.setState({imgURL: this.state.input});
 
     // clarifai doesn't work properly
     // console.log('button submitted')
@@ -121,7 +157,9 @@ export class App extends Component<object, AppState> {
         {route === 'home' ?
           <div>  
             <Logo />
-            <Rank />
+            <Rank
+              name={this.state.user.name}
+              entries={this.state.user.entries} />
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit} />
