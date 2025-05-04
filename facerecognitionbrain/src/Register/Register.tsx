@@ -26,7 +26,30 @@ export const Register = ({ onRouteChange, loadUser }: RegisterProps) => {
             ...prevUser, [name]: value}))
     }
 
-    const onSubmitSignIn = () => {
+    // const onSubmitSignIn = () => {
+    //     fetch('http://localhost:3000/signin', {
+    //         method: 'post',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({
+    //             email: user.email,
+    //             password: user.password
+    //         }),
+    //     })
+    //         .then((response) => response.json())
+    //         .then((userData) => {
+    //             if (userData.id) {
+    //                 loadUser(userData);
+    //                 onRouteChange('home');
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.error('Registration error:', error);
+    //             // Handle the error, e.g., show an error message to the user
+    //         });
+    // };
+
+    const onSubmitRegister = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault(); // Prevent the default form submission
         fetch('http://localhost:3000/register', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
@@ -38,7 +61,7 @@ export const Register = ({ onRouteChange, loadUser }: RegisterProps) => {
         })
             .then((response) => response.json())
             .then((userData) => {
-                if (userData) {
+                if (userData.id) {
                     loadUser(userData);
                     onRouteChange('home');
                 }
@@ -47,11 +70,7 @@ export const Register = ({ onRouteChange, loadUser }: RegisterProps) => {
                 console.error('Registration error:', error);
                 // Handle the error, e.g., show an error message to the user
             });
-    };
-
-    const onSubmitRegister = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault(); // Prevent the default form submission
-        onSubmitSignIn();
+        // onSubmitSignIn();
     }
 
     return (
