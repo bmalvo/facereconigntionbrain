@@ -1,4 +1,4 @@
-import { ChangeEvent, Component } from "react";
+import { ChangeEvent, useState } from "react";
 import { Navigation } from "./Navigation/Navigation";
 import { Logo } from "./components/Logo/Logo";
 import { ImageLinkForm } from "./components/ImageLinkForm/ImageLinkForm";
@@ -30,58 +30,40 @@ interface AppState {
         entries: number,
         joined: Date
       }
-}
-
-// type user = {
-//         id: string,
-//         name: string,
-//         email: string,
-        // password: string,
-        // entries: number,
-        // joined: Date
-
-// }
+};
 
 const initialState = {
   
-      input: '',
-      imgURL: '',
-      box: {},
-      route: 'signin',
-      isSignedIn: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: new Date()
-      }
-
-}
-export class App extends Component<object, AppState> {
-
-  constructor(props: object) {
-
-    super(props);
-    this.state = initialState
+  input: '',
+  imgURL: '',
+  box: {},
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: new Date()
   }
+};
 
-  // loadUser = (user: user) => {
-  //   this.setState({user: {
-  //     id: user.id,
-  //     name: user.name,
-  //     email: user.email,
-  //     entries: 0,
-      // joined: user.
-  //   }})
-  // }
-// no need for delete
-  // componentDidMount() {
-    
-  //   fetch('http://localhost:3000/')
-  //     .then(res => res.json())
-  //     .then(console.log)
-  // }
+export const App = () =>  {
+
+  const [state, setState] = useState<AppState>({
+    input: '',
+    imgURL: '',
+    box: {},
+    route: 'signin',
+    isSignedIn: false,
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      entries: 0,
+      joined: new Date()
+    }
+  });
 
   // clarifai does not work
   // calculateFaceLocation = (data) => {
@@ -101,14 +83,16 @@ export class App extends Component<object, AppState> {
   //   this.setState({box: box});
   // }
 
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setState((prevState) => (
+      { ...prevState, input: e.target.value }
+    )
+    )
+  };
 
-  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ input: e.target.value })
-  }
-
-  onButtonSubmit = () => {
-
-    this.setState({imgURL: this.state.input});
+  const onButtonSubmit = () => {
+    setState((prevState) => (
+      { ...prevState, imgURL: state.input }));
 
     // clarifai doesn't work properly
     console.log('button submitted')
@@ -134,46 +118,48 @@ export class App extends Component<object, AppState> {
     //   })
     //   .catch(err => console.log(err));
   
-  }
+  };
 
-  onRouteChange = (route: string) => {
+  const onRouteChange = (route: string) => {
 
     if (route === 'signout') {
       
-      this.setState(initialState)
+      setState(initialState)
     } else if (route === 'home') {
 
-      this.setState({isSignedIn: true})
+      setState((prevState) => (
+        { ...prevState, isSignedIn: true }))
     }
-    this.setState({ route: route });
-  }
+    setState((prevState) => (
+      { ...prevState, route: route }));
+  };
 
-  render() {
 
-    const {  isSignedIn, route, imgURL} = this.state;
+
+    const {  isSignedIn, route, imgURL} = state;
 
     return (
     
       <div className="App">
         <ParticlesBg type="tadpole" bg={true}/>
-        <Navigation  onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
+        <Navigation  onRouteChange={onRouteChange} isSignedIn={isSignedIn} />
         {route === 'home' ?
           <div>
             <Logo />
             <Rank
-              name={this.state.user.name}
-              entries={this.state.user.entries} />
+              name={state.user.name}
+              entries={state.user.entries} />
             <ImageLinkForm
-              onInputChange={this.onInputChange}
-              onButtonSubmit={this.onButtonSubmit} />
+              onInputChange={onInputChange}
+              onButtonSubmit={onButtonSubmit} />
             <FaceRecognition imgURL={imgURL} />
           </div>
           : (
             route === 'signin' ?
-              <Singin onRouteChange={this.onRouteChange} />
+              <Singin onRouteChange={onRouteChange} />
               :
               <Register
-                onRouteChange={this.onRouteChange}
+                onRouteChange={onRouteChange}
                 // loadUser={this.loadUser}
                 // onSubmitSignIn={function (data: unknown): void {
                 // throw new Error("Function not implemented.");}
@@ -184,4 +170,3 @@ export class App extends Component<object, AppState> {
         </div>
     )
   }
-}
