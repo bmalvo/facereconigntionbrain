@@ -32,14 +32,15 @@ interface AppState {
       }
 }
 
-type user = {
-id: string,
-        name: string,
-        email: string,
-        entries: number,
-        joined: Date
+// type user = {
+//         id: string,
+//         name: string,
+//         email: string,
+        // password: string,
+        // entries: number,
+        // joined: Date
 
-}
+// }
 
 const initialState = {
   
@@ -65,15 +66,15 @@ export class App extends Component<object, AppState> {
     this.state = initialState
   }
 
-  loadUser = (data: user) => {
-    this.setState({user: {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      entries: data.entries,
-      joined: data.joined
-    }})
-  }
+  // loadUser = (user: user) => {
+  //   this.setState({user: {
+  //     id: user.id,
+  //     name: user.name,
+  //     email: user.email,
+  //     entries: 0,
+      // joined: user.
+  //   }})
+  // }
 // no need for delete
   // componentDidMount() {
     
@@ -157,7 +158,7 @@ export class App extends Component<object, AppState> {
         <ParticlesBg type="tadpole" bg={true}/>
         <Navigation  onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
         {route === 'home' ?
-          <div>  
+          <div>
             <Logo />
             <Rank
               name={this.state.user.name}
@@ -169,13 +170,15 @@ export class App extends Component<object, AppState> {
           </div>
           : (
             route === 'signin' ?
-              <Singin onRouteChange={this.onRouteChange} /> 
+              <Singin onRouteChange={this.onRouteChange} />
               :
-              <Register onRouteChange={this.onRouteChange} loadUser={function (user: { name: string; email: string; password: string; }): void {
-                throw new Error("Function not implemented.");
-              } } onSubmitSignIn={function (data: unknown): void {
-                throw new Error("Function not implemented.");
-              } }/>
+              <Register
+                onRouteChange={this.onRouteChange}
+                // loadUser={this.loadUser}
+                // onSubmitSignIn={function (data: unknown): void {
+                // throw new Error("Function not implemented.");}
+                // }
+              />
           )
         }
         </div>

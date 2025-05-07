@@ -1,29 +1,49 @@
 import React, { useState } from "react";
 
 interface RegisterProps {
-  loadUser: (user: user) => void;
+//   loadUser: (user: user) => void;
     onRouteChange: (route: string) => void;
-    onSubmitSignIn: (data: unknown) => void;
+//     // onSubmitSignIn: (data: unknown) => void;
 }
 
 type user = {
     name: string;
     email: string;
     password: string;
+    entries: number;
+    joined: object;
 }
 
-export const Register = ({ onRouteChange, loadUser }: RegisterProps) => {
+export const Register = ({ onRouteChange }: RegisterProps) => {
+
 
     const [ user, setUser ] = useState<user>({
         name: '',
         email: '',
-        password: ''
+        password: '',
+        entries: 0,
+        joined: new Date
     });
 
     const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
+        const { value } = event.target;
         setUser((prevUser) => ({
-            ...prevUser, [name]: value}))
+            ...prevUser, name: value
+        }))
+    }
+
+    const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setUser((prevUser) => ({
+            ...prevUser, email: value
+        }))
+    }
+
+    const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setUser((prevUser) => ({
+            ...prevUser, password: value
+        }))
     }
 
     // const onSubmitSignIn = () => {
@@ -62,8 +82,9 @@ export const Register = ({ onRouteChange, loadUser }: RegisterProps) => {
             .then((response) => response.json())
             .then((userData) => {
                 if (userData.id) {
-                    loadUser(userData);
+                    // loadUser(userData);
                     onRouteChange('home');
+                    console.log('registered: ', user.name , user.email, user.password)
                 }
             })
             .catch((error) => {
@@ -97,7 +118,7 @@ export const Register = ({ onRouteChange, loadUser }: RegisterProps) => {
                                     type="email"
                                     name="email"
                                     id="email-address"
-                                    onChange={onNameChange}
+                                    onChange={onEmailChange}
                                 />
                             </div>
                             <div className="mv3">
@@ -107,7 +128,7 @@ export const Register = ({ onRouteChange, loadUser }: RegisterProps) => {
                                     type="password"
                                     name="password"
                                     id="password"
-                                    onChange={onNameChange}
+                                    onChange={onPasswordChange}
                                 />
                             </div>
                         </fieldset>
